@@ -1,5 +1,5 @@
 /**
- *  两个元素和等于 7
+ *  两个元素求和
  */
 
 function fun1(arr, sum) {
@@ -10,6 +10,7 @@ function fun1(arr, sum) {
     for (let j = 0; j < arr.length; j++) {
       if (arr[i] + arr[j] === sum) {
         res.push([arr[i], arr[j]])
+        break
       }
     }
   }
@@ -26,7 +27,7 @@ function fun2(arr, sum) {
   }
 
   for (let i = 0; i < arr.length; i++) {
-    if (numKey[sum - arr[i]] && res.indexOf(arr[i]) < 0) {
+    if (numKey[sum - arr[i]] === sum - arr[i]) {
       res.push([arr[i], numKey[sum - arr[i]]])
     }
   }
@@ -34,8 +35,8 @@ function fun2(arr, sum) {
   return res
 }
 
-let arr = [1, 2, 4, 3, 6]
-const sum = 7
+let arr = [1, 4, 3, 5, 7, 8, 9, 2, 3, 6, 1, 4, 8, 2]
+const sum = 13
 
 console.time('暴力')
 console.table(fun1(arr, sum))
