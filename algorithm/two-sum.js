@@ -21,7 +21,7 @@ function fun1(nums, target) {
 }
 
 function fun2(nums, target) {
-  let res
+  // let res
   let comp = {}
 
   for (let i = 0; i < nums.length; i++) {
@@ -30,17 +30,16 @@ function fun2(nums, target) {
 
   for (let i = 0; i < nums.length; i++) {
     if (comp[target - nums[i]] && i != comp[target - nums[i]]) {
-      res =
-        comp[target - nums[i]] > i
-          ? [i, comp[target - nums[i]]]
-          : [comp[target - nums[i]], i]
+      return comp[target - nums[i]] > i
+        ? [i, comp[target - nums[i]]]
+        : [comp[target - nums[i]], i]
     }
   }
 
-  return res
+  // return res
 }
 
-let arr = [3, 3, 11, 15]
+let arr = [3, 2, 4, 15]
 const sum = 6
 
 console.time('暴力')
