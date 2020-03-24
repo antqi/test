@@ -26,8 +26,29 @@ function fun1(n) {
   }
 }
 
-for (let i = 0; i <= 40; i++) {
-  console.time(`INDEX_${i}`)
-  console.log(fun1(i))
-  console.timeEnd(`INDEX_${i}`)
+// 缓存方式
+function fun2(n) {
+  let cache = [0]
+  let count = 0
+
+  while (count <= n) {
+    if (count < 2) {
+      cache[count] = count
+    } else {
+      cache[count] = cache[count - 1] + cache[count - 2]
+    }
+    count++
+  }
+  console.table(cache)
+  return cache[n]
 }
+
+const n = 46
+
+// console.time(`递归${n}`)
+// console.log('结果：', fun1(n))
+// console.timeEnd(`递归${n}`)
+
+console.time(`缓存${n}`)
+console.log('\n结果：', fun2(n))
+console.timeEnd(`缓存${n}`)
