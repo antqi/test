@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <h2>表单</h2>
-    <q-form>
-      <q-form-item label="用户名">
+    <q-form :rules="rules" :model="user" ref="form">
+      <q-form-item label="用户名" prop="name">
         <q-input v-model="user.name" placeholder="username"></q-input>
       </q-form-item>
-      <q-form-item label="密码">
+      <q-form-item label="密码" prop="password">
         <q-input type="password" v-model="user.password" placeholder="password"></q-input>
       </q-form-item>
       <q-form-item>
@@ -30,17 +30,25 @@ export default {
       user: {
         name: '',
         password: ''
+      },
+      rules: {
+        name: [{ required: true, message: '用户名不能为空哦' }],
+        password: [{ required: true, message: '密码不能为空哦' }]
       }
     }
   },
   methods: {
     onLogin () {
-      if (!this.user.name || !this.user.password) {
-        alert('请填写用户名&密码')
-        return
-      } else {
-        alert('请求登录')
-      }
+      // console.log(this.$refs.form)
+      this.$refs.form.validate((valid) => {
+        console.log(valid)
+      })
+      // if (!this.user.name || !this.user.password) {
+      //   alert('请填写用户名&密码')
+      //   return
+      // } else {
+      //   alert('请求登录')
+      // }
     }
   },
 }
