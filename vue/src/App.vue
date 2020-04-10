@@ -42,6 +42,7 @@ export default {
       // console.log(this.$refs.form)
       this.$refs.form.validate((valid) => {
         console.log(valid)
+        alert(`验证：${valid}`)
       })
       // if (!this.user.name || !this.user.password) {
       //   alert('请填写用户名&密码')

@@ -7,6 +7,9 @@
 </template>
 
 <script>
+
+import Schema from 'async-validator'
+
 export default {
   name: 'q-form-item',
   inject: ['form'],
@@ -32,18 +35,19 @@ export default {
   },
   methods: {
     validate () {
-
       const rule = this.form.rules[this.prop]
       const value = this.form.model[this.prop]
+      const schema = new Schema({ [this.prop]: rule })
 
-      for (let i = 0; i < rule.length; i++) {
-        if (rule[i].required && !value) {
-          this.error = rule[i].message
-          return false
+      return schema.validate({
+        [this.prop]: value
+      }, (error, filed) => {
+        if (error) {
+          this.error = error[0].message
+        } else {
+          this.error = ''
         }
-      }
-
-      return true
+      })
     }
   },
 }

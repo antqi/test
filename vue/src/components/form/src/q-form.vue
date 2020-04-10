@@ -9,20 +9,20 @@ export default {
   name: 'q-form',
   props: {
     model: {
-      type: Object
+      type: Object,
     },
     rules: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   provide () {
     return {
-      form: this
+      form: this,
     }
   },
   data () {
     return {
-      fileds: []
+      fileds: [],
     }
   },
   created () {
@@ -36,20 +36,21 @@ export default {
     },
     validate (cb) {
       let b = true
-
-      this.fileds.forEach(filed => {
-        if (!filed.item.validate()) {
-          b = false
-        }
+      let tasks = this.fileds.map((filed) => {
+        return filed.item.validate()
       })
 
-      cb(b)
-    }
+      Promise.all(tasks).then(res => {
+        cb(true)
+      }).catch(err => {
+        cb(false)
+      })
+    },
   },
 }
 </script>
 
-<style lang="stylus" >
+<style lang="stylus">
 .q-form
   display inline-block
   text-align initial
