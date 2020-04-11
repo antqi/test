@@ -19,6 +19,7 @@
 import QForm from '@/components/form'
 import QFormItem from '@/components/form-item'
 import QInput from '@/components/input'
+import QAlert from '@/components/alert'
 
 export default {
   name: 'app',
@@ -39,17 +40,12 @@ export default {
   },
   methods: {
     onLogin () {
-      // console.log(this.$refs.form)
       this.$refs.form.validate((valid) => {
-        console.log(valid)
-        alert(`验证：${valid}`)
+        QAlert({
+          message: `验证：${valid ? '成功' : '失败'}`,
+          type: valid ? 'success' : 'error'
+        })
       })
-      // if (!this.user.name || !this.user.password) {
-      //   alert('请填写用户名&密码')
-      //   return
-      // } else {
-      //   alert('请求登录')
-      // }
     }
   },
 }
