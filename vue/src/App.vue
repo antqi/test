@@ -12,6 +12,7 @@
         <button type="button" @click="onLogin">登录</button>
       </q-form-item>
     </q-form>
+    <q-tree :data="list"></q-tree>
   </div>
 </template>
 
@@ -20,22 +21,94 @@ import QForm from '@/components/form'
 import QFormItem from '@/components/form-item'
 import QInput from '@/components/input'
 import QAlert from '@/components/alert'
+import QTree from '@/components/tree'
 
 export default {
   name: 'app',
   components: {
-    QForm, QFormItem, QInput
+    QForm,
+    QFormItem,
+    QInput,
+    QTree,
   },
   data () {
     return {
       user: {
         name: '',
-        password: ''
+        password: '',
       },
       rules: {
         name: [{ required: true, message: '用户名不能为空哦' }],
-        password: [{ required: true, message: '密码不能为空哦' }]
-      }
+        password: [{ required: true, message: '密码不能为空哦' }],
+      },
+      list: [
+        {
+          id: '8004601d-e9d8-52ae-8c31-051e499db583',
+          name: 'vessels',
+          color: '#5c8b5d',
+        },
+        {
+          id: '82c52393-ff2e-582b-8ab8-15be15396812',
+          name: 'tool',
+          color: '#b20171',
+          children: [
+            {
+              id: '359800ad-2b3f-5635-a676-54244222bc46',
+              name: 'loss',
+              color: '#601513',
+            },
+            {
+              id: '359800ad-2b3f-5635-a676-54244222bc46',
+              name: 'loss',
+              color: '#601513',
+            },
+          ],
+        },
+        {
+          id: '6a5baa04-5d7d-57b1-bfc4-9afa80a8f5f1',
+          name: 'thy',
+          color: '#e8a356',
+          children: [
+            {
+              id: 'a84ff0ef-646b-55b7-8db6-0a23a7c0ffb3',
+              name: 'using',
+              color: '#c673fc',
+            },
+            {
+              id: 'a84ff0ef-646b-55b7-8db6-0a23a7c0ffb3',
+              name: 'using',
+              color: '#c673fc',
+            },
+          ],
+        },
+        {
+          id: '8f033a90-aebe-5615-8c2e-853fab92d0d8',
+          name: 'pick',
+          color: '#c52186',
+        },
+        {
+          id: 'b1f2b22f-c862-5179-98d3-c419b22c0b32',
+          name: 'canal',
+          color: '#9b58a9',
+          children: [
+            {
+              id: '2a0da72d-ea77-5b64-a615-4431f8656845',
+              name: 'buried',
+              color: '#0cd64e',
+            },
+            {
+              id: '2a0da72d-ea77-5b64-a615-4431f8656845',
+              name: 'buried',
+              color: '#0cd64e',
+            },
+          ],
+        },
+        {
+          id: '1a730ba0-7597-58a4-9bc1-c53afeb30a32',
+          name: 'cotton',
+          color: '#184229',
+        },
+      ],
     }
   },
   methods: {
@@ -43,10 +116,10 @@ export default {
       this.$refs.form.validate((valid) => {
         QAlert({
           message: `验证：${valid ? '成功' : '失败'}`,
-          type: valid ? 'success' : 'error'
+          type: valid ? 'success' : 'error',
         })
       })
-    }
+    },
   },
 }
 </script>
