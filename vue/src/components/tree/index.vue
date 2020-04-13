@@ -2,10 +2,13 @@
   <ul class="q-tree">
     <li v-for="(item,index) in  data" :key="index">
       {{item.name}}
-      <span class="toogle" @click="onToogle" v-if="item.children">{{isShow?'收起':'展开'}}</span>
-
+      <span
+        class="toogle"
+        @click="onToogle(index)"
+        v-if="item.children"
+      >{{currentIndex===index?'收起':'展开'}}</span>
       <q-tree
-        :class="{hide:!isShow}"
+        :class="{hide:currentIndex!==index}"
         :data="item.children"
         v-if="item.children&&item.children.length"
       ></q-tree>
@@ -24,12 +27,12 @@ export default {
   },
   data () {
     return {
-      isShow: false
+      currentIndex: -1
     }
   },
   methods: {
-    onToogle () {
-      this.isShow = !this.isShow
+    onToogle (index) {
+      this.currentIndex = this.currentIndex === index ? -1 : index
     }
   },
 }

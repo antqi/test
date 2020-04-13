@@ -95,6 +95,12 @@ export default {
               id: '2a0da72d-ea77-5b64-a615-4431f8656845',
               name: 'buried',
               color: '#0cd64e',
+              children: [
+                { id: '6a0eba4f-058f-5da3-b093-002bd736f5ce', name: 'police', color: '#56a68b' },
+                { id: 'b4dcebff-c459-5ae9-b50b-3c480e511172', name: 'therefore', color: '#5bbf59' },
+                { id: 'bcd7a1ee-ae17-5133-a76c-c910ee53379c', name: 'gas', color: '#a83353' },
+                { id: '9ca7b2e0-9ece-5aca-bc6f-33fdd4e1e2c2', name: 'someone', color: '#a6d07e' },
+              ]
             },
             {
               id: '2a0da72d-ea77-5b64-a615-4431f8656845',
