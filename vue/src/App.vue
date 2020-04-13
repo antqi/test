@@ -12,7 +12,7 @@
         <button type="button" @click="onLogin">登录</button>
       </q-form-item>
     </q-form>
-    <q-tree :data="list"></q-tree>
+    <q-tree :list="list"></q-tree>
   </div>
 </template>
 
@@ -21,7 +21,7 @@ import QForm from '@/components/form'
 import QFormItem from '@/components/form-item'
 import QInput from '@/components/input'
 import QAlert from '@/components/alert'
-import QTree from '@/components/tree'
+import QTree from '@/components/tree/index'
 
 export default {
   name: 'app',
