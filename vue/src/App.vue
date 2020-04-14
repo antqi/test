@@ -12,7 +12,12 @@
         <button type="button" @click="onLogin">登录</button>
       </q-form-item>
     </q-form>
-    <q-tree :list="list"></q-tree>
+    <q-tree :list="list" show-key="name">
+      <!-- <template slot-scope="alo"></template> -->
+      <!-- <template>
+        <span>{{scope.item.name}}</span>
+      </template>-->
+    </q-tree>
   </div>
 </template>
 
@@ -21,7 +26,7 @@ import QForm from '@/components/form'
 import QFormItem from '@/components/form-item'
 import QInput from '@/components/input'
 import QAlert from '@/components/alert'
-import QTree from '@/components/tree/index'
+import QTree from '@/components/tree'
 
 export default {
   name: 'app',
@@ -53,13 +58,13 @@ export default {
           color: '#b20171',
           children: [
             {
-              id: '359800ad-2b3f-5635-a676-54244222bc46',
+              id: '359800ad-2b3f-5635-a6762323232333c56',
               name: 'loss',
               color: '#601513',
             },
             {
               id: '359800ad-2b3f-5635-a676-54244222bc46',
-              name: 'loss',
+              name: 'loss2',
               color: '#601513',
             },
           ],
@@ -70,7 +75,7 @@ export default {
           color: '#e8a356',
           children: [
             {
-              id: 'a84ff0ef-646b-55b7-8db6-0a23a7c0ffb3',
+              id: 'a84ff0ef-646b-55b7-8db6-0a23a7c0ffb2',
               name: 'using',
               color: '#c673fc',
             },
@@ -104,7 +109,7 @@ export default {
             },
             {
               id: '2a0da72d-ea77-5b64-a615-4431f8656845',
-              name: 'buried',
+              name: 'buried2',
               color: '#0cd64e',
             },
           ],
