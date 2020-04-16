@@ -1,9 +1,10 @@
-import Vuex from 'vuex'
+// import Vuex from 'vuex'
+import QVuex from '@/components/qvuex'
 import Vue from 'vue'
 
-Vue.use(Vuex)
+Vue.use(QVuex)
 
-export default new Vuex.Store({
+export default new QVuex.Store({
   state: {
     count: 0,
   },

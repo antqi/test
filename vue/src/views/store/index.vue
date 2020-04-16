@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -23,7 +23,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['count'])
+    count () {
+      return this.$store.state.count
+    }
   },
   methods: {
     onAdd () {
