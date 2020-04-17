@@ -2,17 +2,27 @@ let Vue
 
 class Store {
   constructor(options) {
-    console.log(options)
     this.state = new Vue({
       data: options.state,
     })
 
     this.mutations = options.mutations
-    // this.getters = options.getters
     this.actions = options.actions
-
+    this.handlerGetters(options.getters)
+    // this.getters = this.handlerGetters(options.getters)
     this.commit = this.commit.bind(this)
     this.dispatch = this.dispatch
+  }
+
+  handlerGetters(getters) {
+    Object.keys(getters).forEach((key) => {
+      Object.defineProperty(getters, key, {
+        get: () => {
+          // 只读
+          return getters[key](this.state)
+        },
+      })
+    })
   }
 
   commit(type, args) {
