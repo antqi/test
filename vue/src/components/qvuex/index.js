@@ -15,8 +15,9 @@ class Store {
   }
 
   handlerGetters(getters) {
+    this.getters = {}
     Object.keys(getters).forEach((key) => {
-      Object.defineProperty(getters, key, {
+      Object.defineProperty(this.getters, key, {
         get: () => {
           // 只读
           return getters[key](this.state)
