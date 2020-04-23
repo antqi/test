@@ -57,8 +57,9 @@ class Compile {
   // 文班编译
   compileText(node, key) {
     // console.log(node.textContent, key)
-    // console.log(key, '-----', this.$vm.$data[key])
-    node.textContent = this.$vm.$data[key]
+    console.log(key, '-----', this.$vm.$data[key])
+    // node.textContent = this.$vm.$data[key]
+    compileUtil.text(node, this.$vm, key)
   }
 
   isElementNode(el) {
