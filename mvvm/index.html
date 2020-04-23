@@ -8,10 +8,18 @@
   <body>
     <div id="app">
       <!-- <input type="text"> -->
-      <strong>{{word}}</strong>
+      <h1>
+        {{word}}
+        <small class="small">{{title}}</small>
+      </h1>
     </div>
-
-    <script src="./main.js"></script>
+    <script src="./watcher.js"></script>
+    <script src="./dep.js"></script>
+    <script src="./observer.js"></script>
+    <script src="./compile/updater.js"></script>
+    <script src="./compile/utils.js"></script>
+    <script src="./compile/index.js"></script>
+    <script src="./index.js"></script>
 
     <script>
       var app = new QVue({
