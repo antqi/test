@@ -7,7 +7,7 @@
   </head>
   <body>
     <div id="app">
-      <!-- <input type="text"> -->
+      <input type="text" v-model="word" />
       <h1>
         {{word}}
         <small class="small">{{user.name}}</small>
@@ -37,6 +37,10 @@
       app.$data.user
       app.$data.user.name = 'xu'
       // console.log(app.$data.user.name)
+
+      setInterval(() => {
+        // app.$data.word = Math.random()
+      }, 500)
     </script>
   </body>
 </html>

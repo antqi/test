@@ -39,7 +39,7 @@ class Compile {
     childNodes.forEach((node) => {
       // dom元素节点
       if (this.isElementNode(node)) {
-        console.log('ekement')
+        this.compile(node)
       }
       // 文本节点
       else if (this.isTextNode(node) && textModelReg.test(node.textContent)) {
@@ -57,9 +57,13 @@ class Compile {
   // 文班编译
   compileText(node, key) {
     // console.log(node.textContent, key)
-    console.log(key, '-----', this.$vm.$data[key])
+    // console.log(key, '-----', this.$vm.$data[key])
     // node.textContent = this.$vm.$data[key]
     compileUtil.text(node, this.$vm, key)
+  }
+
+  compile(node) {
+    console.log('编译Node ', node)
   }
 
   isElementNode(el) {
