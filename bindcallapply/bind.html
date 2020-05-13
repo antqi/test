@@ -11,26 +11,37 @@
 
     <script>
       var moduleA = {
-        name: 'moduleA',
+        name: 'data from A',
         id: '123',
         callName: function () {
-          console.log(this)
-          console.log('moduleName', this.name)
+          console.log('moduleName', this.name, ...arguments)
         },
       }
-      var name = 'window'
+      var name = 'data from window'
       var dataB = {
-        name: 'dataB',
+        name: 'data from B ',
       }
 
       var moduleBCallName = moduleA.callName
       moduleBCallName()
 
-      moduleBCallName = moduleA.callName.bind(moduleA)
+      moduleBCallName = moduleA.callName.bind(moduleA, 1, 2)
       moduleBCallName()
 
       moduleBCallName = moduleA.callName.bind(dataB)
       moduleBCallName()
+
+      function modeleC() {
+        var name = 'moduleC'
+        var moduleBCallName1 = moduleA.callName.bind(moduleD)
+        moduleBCallName1()
+      }
+
+      function moduleD() {
+        var name = 'modeleD'
+        modeleC()
+      }
+      moduleD()
     </script>
   </body>
 </html>
