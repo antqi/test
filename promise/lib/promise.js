@@ -8,31 +8,32 @@
    * @param {Function} excutor 执行器函数
    */
   function Promise(excutor) {
-    this.STATUS = {
+    let _self = this
+    _self.STATUS = {
       PENDING: 'pending',
       RESOLVED: 'resolved',
       REJECTED: 'rejected',
     }
-    this.status = this.STATUS.PENDING // 指定promise对象的出事状态
-    this.data = undefined // 给promise对象一个用于存储结果数据的属性
-    this.callbacks = [] // 每个元素的结构：{ onResolved(){}, onRejected(){} }
+    _self.status = _self.STATUS.PENDING // 指定promise对象的出事状态
+    _self.data = undefined // 给promise对象一个用于存储结果数据的属性
+    _self.callbacks = [] // 每个元素的结构：{ onResolved(){}, onRejected(){} }
 
     function resolve(value) {
       // 状态只能改一次
-      if (this.status !== this.STATUS.PENDING) {
+      if (_self.status !== _self.STATUS.PENDING) {
         return
       }
 
       // 改状态为resolved
-      this.status = this.STATUS.RESOLVED
+      _self.status = _self.STATUS.RESOLVED
       // 保存value数据
-      this.data = value
+      _self.data = value
 
       // 如果有待执行的callback函数, 立即异步执行指定回调函数onResolved
-      if (this.callbacks.length) {
+      if (_self.callbacks.length) {
         setTimeout(() => {
           // 放入队列执行所有成功的回调
-          this.callbacks.forEach((callbacksObj) => {
+          _self.callbacks.forEach((callbacksObj) => {
             callbacksObj.onResolved(value)
           })
         })
@@ -41,20 +42,20 @@
 
     function reject(reason) {
       // 状态只能改一次
-      if (this.status !== this.STATUS.PENDING) {
+      if (_self.status !== _self.STATUS.PENDING) {
         return
       }
 
       // 改状态为rejected
-      this.status = this.STATUS.REJECTED
+      _self.status = _self.STATUS.REJECTED
       // 保存value数据
-      this.data = reason
+      _self.data = reason
 
       // 如果有待执行的callback函数, 立即异步执行指定回调函数onRejected
-      if (this.callbacks.length) {
+      if (_self.callbacks.length) {
         setTimeout(() => {
           // 放入队列执行所有失败的回调
-          this.callbacks.forEach((callbacksObj) => {
+          _self.callbacks.forEach((callbacksObj) => {
             callbacksObj.onRejected(reason)
           })
         })
@@ -76,14 +77,39 @@
    * @param {Function} onRejected 指定失败的回调函数
    * @return {Promise} promise 新的promise对象
    */
-  Promise.prototype.then = function (onResolved, onRejected) {}
+  Promise.prototype.then = function (onResolved, onRejected) {
+    // 将指定的回调函数保存起来
+    this.callbacks.push({
+      onResolved,
+      onRejected,
+    })
+
+    // 当前状态还是pending状态时，回调函数调用则在改拜年状态时调用，也就是resole reject函数
+    // 若先改变状态，后指定回调函数
+    if (this.status !== this.STATUS.PENDING) {
+      if (this.callbacks.length) {
+        setTimeout(() => {
+          if (this.status === this.STATUS.RESOLVED) {
+            onResolved(this.data)
+          } else {
+            onRejected(this.data)
+          }
+        })
+      }
+    }
+
+    // 并返回promise
+    return this
+  }
 
   /**
    * Promise原型对象的catch，并返回一个新的promise对象
    * @param {Function} onRejected 指定失败的回调函数
    * @return {Promise} promise 新的promise对象
    */
-  Promise.prototype.catch = function (onRejected) {}
+  Promise.prototype.catch = function (onRejected) {
+    console.log(this.status)
+  }
 
   /**
    * Promise函数对象resolve,并返回一个指定成功的promise
