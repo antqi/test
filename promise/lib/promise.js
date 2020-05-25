@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-05-25 15:14:05
  * @Last Modified by: antqi
- * @Last Modified time: 2020-05-25 17:03:35
+ * @Last Modified time: 2020-05-25 17:14:55
  * @Description: 自定义Promise ES5版本
  */
 
@@ -65,6 +65,19 @@
    */
   Promise.prototype.then = function (onResolved, onRejected) {
     let _self = this
+
+    onResolved =
+      onResolved instanceof Function
+        ? onResolved
+        : function (value) {
+            return value
+          }
+    onRejected =
+      onRejected instanceof Function
+        ? onRejected
+        : function (reason) {
+            throw reason
+          }
 
     // 返回一个新的Promise
     return new Promise((resolve, reject) => {
