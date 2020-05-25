@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-05-25 15:14:05
  * @Last Modified by: antqi
- * @Last Modified time: 2020-05-25 15:40:29
+ * @Last Modified time: 2020-05-25 15:43:30
  * @Description: 自定义Promise ES5版本
  */
 
@@ -58,4 +58,7 @@
    * @return 一个新的promise ，第一个解决或拒绝的promise的结果状态就是最终的结果状态
    */
   Promise.race = function (promises) {}
+
+  // 向外暴露
+  param.Promise = Promise
 })(window)
