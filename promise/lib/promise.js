@@ -3,8 +3,8 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-05-25 15:14:05
  * @Last Modified by: antqi
- * @Last Modified time: 2020-05-25 15:37:45
- * @Description: Description
+ * @Last Modified time: 2020-05-25 15:40:29
+ * @Description: 自定义Promise ES5版本
  */
 
 ;(function (param) {
