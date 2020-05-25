@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-05-25 15:14:05
  * @Last Modified by: antqi
- * @Last Modified time: 2020-05-25 17:14:55
+ * @Last Modified time: 2020-05-25 18:22:47
  * @Description: 自定义Promise ES5版本
  */
 
@@ -66,14 +66,15 @@
   Promise.prototype.then = function (onResolved, onRejected) {
     let _self = this
 
+    // 没有指定回调函数的时候
     onResolved =
-      onResolved instanceof Function
+      typeof onResolved === 'function'
         ? onResolved
         : function (value) {
             return value
           }
     onRejected =
-      onRejected instanceof Function
+      typeof onRejected === 'function'
         ? onRejected
         : function (reason) {
             throw reason
@@ -82,6 +83,7 @@
     // 返回一个新的Promise
     return new Promise((resolve, reject) => {
       function handler(callback) {
+        debugger
         try {
           const result = callback(_self.data)
 
@@ -98,14 +100,21 @@
         }
       }
       if (_self.status === _self.STATUS.RESOLVED) {
-        // 当前状态是resolved，执行成功的回调函数
-        handler(onResolved)
+        // 当前状态是resolved，立即异步执行成功的回调函数
+        setTimeout(handler(onResolved))
       } else if (_self.status === _self.STATUS.REJECTED) {
-        // 当前状态是rejeted，执行失败的回调函数
-        handler(onRejected)
+        // 当前状态是rejeted，立即异步执行失败的回调函数
+        setTimeout(handler(onRejected))
       } else {
         // 当天状态是pending，将指定的回调函数存储到callbacks
-        _self.callbacks.push({ onResolved, onRejected })
+        _self.callbacks.push({
+          onResolved: function () {
+            handler(onResolved)
+          },
+          onRejected: function () {
+            handler(onRejected)
+          },
+        })
       }
     })
   }
@@ -115,7 +124,9 @@
    * @param {Function} onRejected 失败的回调函数
    * @return Promise对象
    */
-  Promise.prototype.catch = function (onRejected) {}
+  Promise.prototype.catch = function (onRejected) {
+    return this.then(undefined, onRejected)
+  }
 
   /**
    * @desc 静态方法resolve，理解为快捷指定成功回调函数的方法

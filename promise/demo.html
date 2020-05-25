@@ -9,18 +9,13 @@
     <script src="./lib/promise.js"></script>
     <script>
       const p = new Promise((resolve, reject) => {
-        resolve(1)
+        // resolve(1)
+        throw '232'
         console.log(23213)
       })
-
-      p.then().then(
-        (value) => {
-          console.log('onResolved2', value)
-        },
-        (reason) => {
-          console.log('onRejected2', reason)
-        }
-      )
+      p.catch((error) => {
+        console.log('err', error)
+      })
 
       // p.then(
       //   (value) => {
