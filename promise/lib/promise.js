@@ -3,12 +3,21 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-05-25 15:14:05
  * @Last Modified by: antqi
- * @Last Modified time: 2020-05-25 15:43:30
+ * @Last Modified time: 2020-05-25 15:53:46
  * @Description: 自定义Promise ES5版本
  */
 
 ;(function (param) {
   function Promise(excotor) {
+    // 状态常量
+    this.STATUS = {
+      PENDING: 'pending',
+      RESOLVED: 'resolved',
+      REJECTED: 'rejected',
+    }
+    this.status = this.STATUS.PENDING // 初始化状态
+    this.callbacks = [] // 回调函数队列
+
     function resolve() {}
 
     function reject() {}
