@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-05-25 15:14:05
  * @Last Modified by: antqi
- * @Last Modified time: 2020-05-25 15:59:16
+ * @Last Modified time: 2020-05-25 16:19:41
  * @Description: 自定义Promise ES5版本
  */
 
@@ -20,9 +20,33 @@
     _self.data // 当前状态下的data值
     _self.callbacks = [] // 回调函数队列，每个元素的结构：{ onResolved(){}, onRejected(){} }
 
-    function resolve(value) {}
+    function resolve(value) {
+      this.status = this.STATUS.RESOLVED
+      this.data = value
 
-    function reject(reason) {}
+      if (this.status === this.STATUS.RESOLVED) {
+        _self.callbacks.forEach((callback) => {
+          // 异步执行成功的回调：onResolved
+          setTimeout(function () {
+            callback.onResolved(value)
+          })
+        })
+      }
+    }
+
+    function reject(reason) {
+      this.status = this.STATUS.REJECTED
+      this.data = reason
+
+      if (this.status === this.STATUS.REJECTED) {
+        _self.callbacks.forEach((callback) => {
+          // 异步执行失败的回调：onRejected
+          setTimeout(function () {
+            callback.onRejected(reason)
+          })
+        })
+      }
+    }
 
     try {
       // excotor， 立即同步执行执行器函数
@@ -39,7 +63,9 @@
    * @param {Function} onRejected 失败的回调函数
    * @return Promise对象
    */
-  Promise.prototype.then = function (onResolved, onRejected) {}
+  Promise.prototype.then = function (onResolved, onRejected) {
+    let _self = this
+  }
 
   /**
    * @desc 指定失败的回调函数
