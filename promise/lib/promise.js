@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-05-25 15:14:05
  * @Last Modified by: antqi
- * @Last Modified time: 2020-05-25 16:19:41
+ * @Last Modified time: 2020-05-25 17:03:35
  * @Description: 自定义Promise ES5版本
  */
 
@@ -21,11 +21,11 @@
     _self.callbacks = [] // 回调函数队列，每个元素的结构：{ onResolved(){}, onRejected(){} }
 
     function resolve(value) {
-      this.status = this.STATUS.RESOLVED
-      this.data = value
+      _self.status = _self.STATUS.RESOLVED
+      _self.data = value
 
-      if (this.status === this.STATUS.RESOLVED) {
-        _self.callbacks.forEach((callback) => {
+      if (_self.status === _self.STATUS.RESOLVED) {
+        _self.callbacks.forEach(function (callback) {
           // 异步执行成功的回调：onResolved
           setTimeout(function () {
             callback.onResolved(value)
@@ -35,11 +35,11 @@
     }
 
     function reject(reason) {
-      this.status = this.STATUS.REJECTED
-      this.data = reason
+      _self.status = _self.STATUS.REJECTED
+      _self.data = reason
 
-      if (this.status === this.STATUS.REJECTED) {
-        _self.callbacks.forEach((callback) => {
+      if (_self.status === _self.STATUS.REJECTED) {
+        _self.callbacks.forEach(function (callback) {
           // 异步执行失败的回调：onRejected
           setTimeout(function () {
             callback.onRejected(reason)
@@ -65,6 +65,36 @@
    */
   Promise.prototype.then = function (onResolved, onRejected) {
     let _self = this
+
+    // 返回一个新的Promise
+    return new Promise((resolve, reject) => {
+      function handler(callback) {
+        try {
+          const result = callback(_self.data)
+
+          if (result instanceof Promise) {
+            // result是一个Promise
+            result.then(resolve, reject)
+          } else {
+            // result是普通值
+            resolve(result)
+          }
+        } catch (error) {
+          // onRejected抛出异常，则新的promise结果为error
+          reject(error)
+        }
+      }
+      if (_self.status === _self.STATUS.RESOLVED) {
+        // 当前状态是resolved，执行成功的回调函数
+        handler(onResolved)
+      } else if (_self.status === _self.STATUS.REJECTED) {
+        // 当前状态是rejeted，执行失败的回调函数
+        handler(onRejected)
+      } else {
+        // 当天状态是pending，将指定的回调函数存储到callbacks
+        _self.callbacks.push({ onResolved, onRejected })
+      }
+    })
   }
 
   /**
