@@ -3,26 +3,34 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-05-25 15:14:05
  * @Last Modified by: antqi
- * @Last Modified time: 2020-05-25 15:53:46
+ * @Last Modified time: 2020-05-25 15:59:16
  * @Description: 自定义Promise ES5版本
  */
 
 ;(function (param) {
   function Promise(excotor) {
+    let _self = this
     // 状态常量
-    this.STATUS = {
+    _self.STATUS = {
       PENDING: 'pending',
       RESOLVED: 'resolved',
       REJECTED: 'rejected',
     }
-    this.status = this.STATUS.PENDING // 初始化状态
-    this.callbacks = [] // 回调函数队列
+    _self.status = _self.STATUS.PENDING // 初始化状态
+    _self.data // 当前状态下的data值
+    _self.callbacks = [] // 回调函数队列，每个元素的结构：{ onResolved(){}, onRejected(){} }
 
-    function resolve() {}
+    function resolve(value) {}
 
-    function reject() {}
-    // excotor，执行器函数
-    excotor(resolve, reject)
+    function reject(reason) {}
+
+    try {
+      // excotor， 立即同步执行执行器函数
+      excotor(resolve, reject)
+    } catch (error) {
+      // 执行期函数抛出异常，则执行失败的回调函数
+      reject(error)
+    }
   }
 
   /**
