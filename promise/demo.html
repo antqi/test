@@ -8,14 +8,27 @@
   <body>
     <script src="./lib/promise.js"></script>
     <script>
-      const p = new Promise((resolve, reject) => {
-        // resolve(1)
-        throw '232'
-        console.log(23213)
+      const p1 = Promise.reject(1)
+      const p2 = Promise.resolve(2)
+      const p3 = Promise.resolve(Promise.resolve(3))
+
+      p1.catch((value) => {
+        console.log('p1', value)
       })
-      p.catch((error) => {
-        console.log('err', error)
+      p2.then((value) => {
+        console.log('p2', value)
       })
+      p3.then((value) => {
+        console.log('p3', value)
+      })
+      // const p = new Promise((resolve, reject) =  > {
+      //   // resolve(1)
+      //   throw '232'
+      //   console.log(23213)
+      // })
+      // p.catch((error) => {
+      //   console.log('err', error)
+      // })
 
       // p.then(
       //   (value) => {

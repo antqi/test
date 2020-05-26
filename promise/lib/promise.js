@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-05-25 15:14:05
  * @Last Modified by: antqi
- * @Last Modified time: 2020-05-25 18:22:47
+ * @Last Modified time: 2020-05-26 15:05:43
  * @Description: 自定义Promise ES5版本
  */
 
@@ -83,7 +83,6 @@
     // 返回一个新的Promise
     return new Promise((resolve, reject) => {
       function handler(callback) {
-        debugger
         try {
           const result = callback(_self.data)
 
@@ -99,6 +98,7 @@
           reject(error)
         }
       }
+
       if (_self.status === _self.STATUS.RESOLVED) {
         // 当前状态是resolved，立即异步执行成功的回调函数
         setTimeout(handler(onResolved))
@@ -133,14 +133,30 @@
    * @param {any} value 指定任意返回的值
    * @return  被解析过Promise对象
    */
-  Promise.resolve = function (value) {}
+  Promise.resolve = function (value) {
+    return new Promise(function (resolve, reject) {
+      try {
+        if (value instanceof Promise) {
+          value.then(resolve, reject)
+        } else {
+          resolve(value)
+        }
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
 
   /**
    * @desc 静态方法reject，理解为快捷指定失败回调函数的方法
    * @param {any} reason 指定任意返回的值
    * @return  带有特定被拒绝原因的Promise对象
    */
-  Promise.resolve = function (reason) {}
+  Promise.reject = function (reason) {
+    return new Promise(function (resolve, reject) {
+      reject(reason)
+    })
+  }
 
   /**
    * @desc 启动多个异步任务并发运行 ，并组合返回的结果
