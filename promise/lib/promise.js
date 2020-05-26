@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-05-25 15:14:05
  * @Last Modified by: antqi
- * @Last Modified time: 2020-05-26 15:05:43
+ * @Last Modified time: 2020-05-26 16:36:39
  * @Description: 自定义Promise ES5版本
  */
 
@@ -21,6 +21,10 @@
     _self.callbacks = [] // 回调函数队列，每个元素的结构：{ onResolved(){}, onRejected(){} }
 
     function resolve(value) {
+      // 状态只能修改一次
+      if (_self.status === _self.STATUS.RESOLVED) {
+        return
+      }
       _self.status = _self.STATUS.RESOLVED
       _self.data = value
 
@@ -35,6 +39,10 @@
     }
 
     function reject(reason) {
+      // 状态只能修改一次
+      if (_self.status === _self.STATUS.REJECTED) {
+        return
+      }
       _self.status = _self.STATUS.REJECTED
       _self.data = reason
 
@@ -163,14 +171,46 @@
    * @param {Array｜String} promises 多个promise或值组成的数组
    * @return 一个新的Promise，只有所有的Promise都成功才成功，只要有一个失败了就直接失败
    */
-  Promise.all = function (promises) {}
+  Promise.all = function (promises) {
+    let values = new Array(promises.length)
+    let count = 0
+    return new Promise(function (resolve, reject) {
+      promises.forEach(function (promise, index) {
+        Promise.resolve(promise).then(
+          function (value) {
+            count++
+            values[index] = value
+            if (count === promises.length) {
+              resolve(values)
+            }
+          },
+          function (reason) {
+            reject(reason)
+          }
+        )
+      })
+    })
+  }
 
   /**
    * @desc 启动多个异步任务并发运行 ，第一个解决或拒绝的promise的结果状态组成的新的promise
    * @param {Array｜String} promises 多个promise或值组成的数组
    * @return 一个新的promise ，第一个解决或拒绝的promise的结果状态就是最终的结果状态
    */
-  Promise.race = function (promises) {}
+  Promise.race = function (promises) {
+    return new Promise(function (resolve, reject) {
+      promises.forEach(function (p) {
+        p.then(
+          function (value) {
+            resolve(value)
+          },
+          function (reason) {
+            reject(reason)
+          }
+        )
+      })
+    })
+  }
 
   // 向外暴露
   param.Promise = Promise
