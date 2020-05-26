@@ -8,16 +8,9 @@
   <body>
     <script src="./lib/promise.js"></script>
     <script>
-      const p1 = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(1)
-        }, 100)
-      })
-      const p2 = Promise.reject(2)
-      const p3 = Promise.resolve(3)
-      const p4 = Promise.resolve(4)
+      const p1 = Promise.rejectDelay(1, 100)
 
-      Promise.race([p2, p4, p3]).then(
+      p1.then(
         (value) => {
           console.log('onResolved', value)
         },
@@ -25,6 +18,23 @@
           console.log('onRejected', reason)
         }
       )
+      // const p1 = new Promise((resolve, reject) => {
+      //   setTimeout(() => {
+      //     resolve(1)
+      //   }, 100)
+      // })
+      // const p2 = Promise.reject(2)
+      // const p3 = Promise.resolve(3)
+      // const p4 = Promise.resolve(4)
+
+      // Promise.race([p2, p4, p3]).then(
+      //   (value) => {
+      //     console.log('onResolved', value)
+      //   },
+      //   (reason) => {
+      //     console.log('onRejected', reason)
+      //   }
+      // )
 
       // Promise.all([p1, p2, p3]).then(
       //   (value) => {

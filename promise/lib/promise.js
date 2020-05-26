@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-05-25 15:14:05
  * @Last Modified by: antqi
- * @Last Modified time: 2020-05-26 16:36:39
+ * @Last Modified time: 2020-05-26 17:04:42
  * @Description: 自定义Promise ES5版本
  */
 
@@ -200,7 +200,7 @@
   Promise.race = function (promises) {
     return new Promise(function (resolve, reject) {
       promises.forEach(function (p) {
-        p.then(
+        Promise.resolve(p).then(
           function (value) {
             resolve(value)
           },
@@ -209,6 +209,32 @@
           }
         )
       })
+    })
+  }
+
+  /**
+   * @desc 定时返回promise以及值
+   */
+  Promise.resolveDelay = function (value, time) {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        if (value instanceof Promise) {
+          value.then(resolve, reject)
+        } else {
+          resolve(value)
+        }
+      }, time)
+    })
+  }
+
+  /**
+   * @desc 定时返回promise拒绝原因
+   */
+  Promise.rejectDelay = function (reason, time) {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        reject(reason)
+      }, time)
     })
   }
 
