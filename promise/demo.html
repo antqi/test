@@ -6,9 +6,9 @@
     <title>Document</title>
   </head>
   <body>
-    <script src="./lib/promise.js"></script>
+    <script src="./lib/promise-es5.js"></script>
     <script>
-      const p1 = Promise.rejectDelay(1, 100)
+      const p1 = Promise.resolveDelay(Promise.reject(1), 100)
 
       p1.then(
         (value) => {
