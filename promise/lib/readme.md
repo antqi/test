@@ -1,0 +1,11 @@
+- [ ] Promise 构造函数
+- [ ] Promise.prototype.then
+- [ ] Promise.prototype.catch
+- [ ] Promise.prototype.finally
+- [ ] Promise.all
+- [ ] Promise.race
+- [ ] Promise.resolve
+- [ ] Promise.reject
+- [ ] 链式调用
+- [ ] 值传透
+- [ ] 中断调用
