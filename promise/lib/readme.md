@@ -1,5 +1,5 @@
-- [ ] Promise 构造函数
-- [ ] Promise.prototype.then
+- [x] Promise 构造函数
+- [x] Promise.prototype.then
 - [ ] Promise.prototype.catch
 - [ ] Promise.prototype.finally
 - [ ] Promise.all
