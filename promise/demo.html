@@ -6,17 +6,30 @@
     <title>Document</title>
   </head>
   <body>
-    <script src="./lib/promise-es5.js"></script>
+    <!-- <script src="./lib/promise-es5.js"></script> -->
     <script>
-      const p1 = Promise.resolveDelay(Promise.reject(1), 100)
+       async function fun1(){
+        //  return 1
+        // throw 1
+        return Promise.resolve(1)
+       }
+      //  console.log(fun1());
 
-      p1.then(
-        (value) => {
-          console.log('onResolved', value)
-        },
-        (reason) => {
-          console.log('onRejected', reason)
-        }
+       try {
+        let result= await fun1()
+        console.log('value',result);
+       } catch (error) {
+        console.log('reason',error);
+       }
+
+      // const p1 = Promise.resolveDelay(Promise.reject(1), 100)
+      // p1.then(
+      //   (value) => {
+      //     console.log('onResolved', value)
+      //   },
+      //   (reason) => {
+      //     console.log('onRejected', reason)
+      //   }
       )
       // const p1 = new Promise((resolve, reject) => {
       //   setTimeout(() => {
