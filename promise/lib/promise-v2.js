@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-06-06 16:46:06
  * @Last Modified by: antqi
- * @Last Modified time: 2020-06-07 13:00:23
+ * @Last Modified time: 2020-06-07 13:08:43
  * @Description: promise-version 2 for broswer
  */
 
@@ -205,7 +205,7 @@
   /**
    * @desc 指定并执行多个promise/一般值
    * @param {Array} promises [promise,promise,...]
-   * @return 返回结果值有两种
+   * @return 返回一个新的Promise对象，该Promise对象的结果值有两种
    *  - 全部执行成功，返回[result1,result2,...]，结果按指定的promise顺序排列
    *  - 有一个执行失败，返回失败的结果值
    */
