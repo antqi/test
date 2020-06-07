@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-06-06 16:46:06
  * @Last Modified by: antqi
- * @Last Modified time: 2020-06-07 13:08:43
+ * @Last Modified time: 2020-06-07 13:09:48
  * @Description: promise-version 2 for broswer
  */
 
@@ -232,9 +232,6 @@
         )
       })
     })
-    // const
-
-    promises.forEach(function (promise, index) {})
   }
 
   Promise.race = function (promises) {}
