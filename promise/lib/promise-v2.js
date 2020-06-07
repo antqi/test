@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-06-06 16:46:06
  * @Last Modified by: antqi
- * @Last Modified time: 2020-06-06 18:13:58
+ * @Last Modified time: 2020-06-07 09:30:34
  * @Description: promise-version 2 for broswer
  */
 
@@ -54,7 +54,7 @@
       for (let i = 0; i < _self.callbackQueue.length; i++) {
         if (_self.callbackQueue[i].onRejected) {
           setTimeout(function () {
-            _self.callbackQueue.onRejected(_self.data)
+            _self.callbackQueue[i].onRejected(_self.data)
           }, 0)
         }
       }
@@ -80,6 +80,19 @@
    */
   Promise.prototype.then = function (onFulfilled, onRejected) {
     const _self = this
+    onFulfilled =
+      typeof onFulfilled === 'function'
+        ? onFulfilled
+        : function (value) {
+            return value
+          }
+
+    onRejected =
+      typeof onRejected === 'function'
+        ? onRejected
+        : function (reason) {
+            throw reason
+          }
 
     return new Promise(function (resolve, reject) {
       function callbackHandler(callback) {
@@ -109,7 +122,6 @@
           callbackHandler(onRejected)
         })
       } else {
-        // onFulfilled= onFulfilled
         // pending，将指定回调函数追加到队列
         _self.callbackQueue.push({
           onFulfilled,
@@ -119,7 +131,15 @@
     })
   }
 
-  Promise.prototype.catch = function (onRejected) {}
+  /**
+   * @desc 指定失败的回调函数
+   * @param {Function} onRejected 失败的回调的函数
+   * @return 新的promise对象
+   */
+  Promise.prototype.catch = function (onRejected) {
+    console.log(onRejected)
+    return this.then(undefined, onRejected)
+  }
 
   Promise.prototype.finally = function (onFinally) {}
 

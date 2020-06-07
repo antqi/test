@@ -17,18 +17,13 @@
       p1.then(
         (value) => {
           console.log('onFulfilled 1', value)
-        },
-        (reason) => {
-          console.log('onRejected 1', reason)
         }
-      ).then(
-        (value) => {
-          console.log('onFulfilled 2', value)
-        },
-        (reason) => {
-          console.log('onRejected 2', reason)
-        }
-      )
+        // (reason) => {
+        //   console.log('onRejected 1', reason)
+        // }
+      ).catch((err) => {
+        console.log('catch error ', err)
+      })
     </script>
   </body>
 </html>
