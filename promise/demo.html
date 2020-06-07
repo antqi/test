@@ -8,26 +8,43 @@
   <body>
     <script src="./lib/promise-v2.js"></script>
     <script>
-      Promise.reject(1)
-        .then(
-          (value) => {
-            console.log('value1 ', value)
-            return Promise.resolve('again 2')
-          },
-          (reason) => {
-            console.log('reason1 ', reason)
-            // throw 'again reason 2'
-            return 2
-          }
-        )
-        .then(
-          (value) => {
-            console.log('value2 ', value)
-          },
-          (reason) => {
-            console.log('reason2 ', reason)
-          }
-        )
+      const p1 = Promise.resolve(1)
+      const p2 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject(1)
+        }, 1000)
+      })
+      const p3 = Promise.resolve(3)
+
+      Promise.all([p1, p2, p3]).then(
+        (value) => {
+          console.log('value ', value)
+        },
+        (reason) => {
+          console.log('reason ', reason)
+        }
+      )
+
+      // Promise.reject(1)
+      //   .then(
+      //     (value) => {
+      //       console.log('value1 ', value)
+      //       return Promise.resolve('again 2')
+      //     },
+      //     (reason) => {
+      //       console.log('reason1 ', reason)
+      //       // throw 'again reason 2'
+      //       return 2
+      //     }
+      //   )
+      //   .then(
+      //     (value) => {
+      //       console.log('value2 ', value)
+      //     },
+      //     (reason) => {
+      //       console.log('reason2 ', reason)
+      //     }
+      //   )
 
       // const p1 = new Promise((resolve, reject) => {
       //   // resolve(1)

@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-06-06 16:46:06
  * @Last Modified by: antqi
- * @Last Modified time: 2020-06-07 12:23:38
+ * @Last Modified time: 2020-06-07 13:00:23
  * @Description: promise-version 2 for broswer
  */
 
@@ -80,6 +80,12 @@
    */
   Promise.prototype.then = function (onFulfilled, onRejected) {
     const _self = this
+
+    // 只执行一次
+    // if (_self.status === _self.STATUS.PENDING) {
+    //   return
+    // }
+
     onFulfilled =
       typeof onFulfilled === 'function'
         ? onFulfilled
@@ -196,7 +202,40 @@
     })
   }
 
-  Promise.all = function (promises) {}
+  /**
+   * @desc 指定并执行多个promise/一般值
+   * @param {Array} promises [promise,promise,...]
+   * @return 返回结果值有两种
+   *  - 全部执行成功，返回[result1,result2,...]，结果按指定的promise顺序排列
+   *  - 有一个执行失败，返回失败的结果值
+   */
+  Promise.all = function (promises) {
+    const _self = this
+    let res = new Array(promises.length)
+
+    return new Promise(function (resolve, reject) {
+      let count = 0
+
+      promises.forEach(function (p, index) {
+        p.then(
+          function (value) {
+            count++
+            res[index] = value
+
+            if (count === promises.length) {
+              resolve(res)
+            }
+          },
+          function (reason) {
+            reject(reason)
+          }
+        )
+      })
+    })
+    // const
+
+    promises.forEach(function (promise, index) {})
+  }
 
   Promise.race = function (promises) {}
 
