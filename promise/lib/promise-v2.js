@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-06-06 16:46:06
  * @Last Modified by: antqi
- * @Last Modified time: 2020-06-07 13:09:48
+ * @Last Modified time: 2020-06-07 13:23:48
  * @Description: promise-version 2 for broswer
  */
 
@@ -234,7 +234,19 @@
     })
   }
 
-  Promise.race = function (promises) {}
+  /**
+   * @desc 指定多个promise对象，并执行
+   * @param {Array} promises Promise对象或一般值
+   * @return 返回一个新的Promise，新的Promise结果值逻辑
+   *  - 返回最快执行的结果
+   */
+  Promise.race = function (promises) {
+    return new Promise(function (resolve, reject) {
+      promises.forEach(function (p, index) {
+        p.then(resolve, reject)
+      })
+    })
+  }
 
   env.Promise = Promise
 })(window)
