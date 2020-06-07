@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-06-06 16:46:06
  * @Last Modified by: antqi
- * @Last Modified time: 2020-06-07 12:12:24
+ * @Last Modified time: 2020-06-07 12:23:38
  * @Description: promise-version 2 for broswer
  */
 
@@ -165,7 +165,7 @@
   /**
    * @desc 执行给定一个指定值的Promise
    * @param {any} vlaue 任意值
-   * @return 返回一个给定值的Promise对象
+   * @return 返回一个解析值的Promise对象
    */
   Promise.resolve = function (value) {
     const _self = this
@@ -185,7 +185,16 @@
     })
   }
 
-  Promise.reject = function (reason) {}
+  /**
+   * @desc 指定一个给定失败值的Promise
+   * @param {any} reason 失败的值
+   * @return 新的Promise
+   */
+  Promise.reject = function (reason) {
+    return new Promise(function (resolve, reject) {
+      reject(reason)
+    })
+  }
 
   Promise.all = function (promises) {}
 
