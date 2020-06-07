@@ -3,7 +3,7 @@
  * @Email: hi.antqi@gmail.com
  * @Date: 2020-06-06 16:46:06
  * @Last Modified by: antqi
- * @Last Modified time: 2020-06-07 11:08:38
+ * @Last Modified time: 2020-06-07 12:12:24
  * @Description: promise-version 2 for broswer
  */
 
@@ -162,7 +162,28 @@
     }
   }
 
-  Promise.resolve = function (value) {}
+  /**
+   * @desc 执行给定一个指定值的Promise
+   * @param {any} vlaue 任意值
+   * @return 返回一个给定值的Promise对象
+   */
+  Promise.resolve = function (value) {
+    const _self = this
+
+    return new Promise(function (resolve, reject) {
+      try {
+        if (value instanceof Promise) {
+          // 指定的值为Promise
+          value.then(resolve, reject)
+        } else {
+          resolve(value)
+        }
+      } catch (error) {
+        // 执行抛出异常：执行失败，结果值为error
+        reject(error)
+      }
+    })
+  }
 
   Promise.reject = function (reason) {}
 
