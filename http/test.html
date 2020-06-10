@@ -8,9 +8,16 @@
   <body>
     <h1>9999</h1>
     <script>
-      const http = new XMLHttpRequest()
-      http.open('GET', 'http://127.0.0.1:10000')
-      http.send()
+      // const http = new XMLHttpRequest()
+      // http.open('GET', 'http://127.0.0.1:10000')
+      // http.send()
+
+      fetch('http://127.0.0.1:10000', {
+        method: 'PUT',
+        headers: {
+          'X-TEST-CORS': '9999',
+        },
+      })
     </script>
   </body>
 </html>
