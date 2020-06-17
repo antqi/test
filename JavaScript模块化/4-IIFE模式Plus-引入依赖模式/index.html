@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IIFE模式Plus-引入依赖</title>
+  </head>
+  <body>
+    <script src="calc.js"></script>
+    <script src="main.js"></script>
+    <!-- 如果这里有若干个script，必将导致HTTP请求响应次数增加，从而可能导致阻塞，影响网页体验 -->
+    <script>
+      // 解决了变量私有，可引入依赖的问题
+      /*
+        但这里有两个问题
+          - 如果calc调换顺序呢
+          - 在上面的基础上，这里有多大20个依赖的时候呢？
+        这就倒是依赖模糊，模块化解决了耦合度问题，但也带来了模块管理问题
+      */
+
+      APP.showResult() // 4
+    </script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>namespace-命名空间模式</title>
+  </head>
+  <body>
+    <script src="main.js"></script>
+    <script>
+      // 命名空间模式减少了全局变量，减少了命名污染可能性，但本质上是对象，外部可以同归属性来修改它的变量甚至是方法，这依然不安全
+      let message = 'HTML Say Hi'
+      APP.message = 'HTML Say Hi + APP '
+      APP.foo()
+    </script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>匿名闭包-IIFE模式</title>
+  </head>
+  <body>
+    <script src="main.js"></script>
+    <script>
+      // 这时候无法修改main.js的message变量值，因为闭包，main.js中的message编程成为了私有变量，但main.js开放了foo方法来显示main.js 中的私有变量message，当然还可以开放修改它的方法
+      // 但如果我想在main.js 中使用其他模块呢？而其他模块也是匿名的
+      let message = 'HTML Say Hi'
+      APP.foo()
+    </script>
+  </body>
+</html>

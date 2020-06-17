@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>全局模式</title>
+  </head>
+  <body>
+    <script src="./main.js"></script>
+    <script>
+      // 非严格模式下，这里的message将main.js中的message覆盖，所以全局是存在命名空间污染风险的
+      var message = 'HTML Say Hi'
+
+      foo() // HTML Say Hi
+      bar() // HTML Say Hi
+    </script>
+  </body>
+</html>
