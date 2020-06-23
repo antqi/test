@@ -1,0 +1,14 @@
+{
+  "name": "commonjs-node",
+  "version": "1.0.0",
+  "description": "commonjs规范-Node 使用",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "hi.antiq@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "uniq": "^1.0.1"
+  }
+}
