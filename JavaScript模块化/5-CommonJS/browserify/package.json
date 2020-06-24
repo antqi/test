@@ -1,0 +1,16 @@
+{
+  "name": "commonjs-browserify",
+  "version": "1.0.0",
+  "description": "commonjs-browserify实践",
+  "main": "app.js",
+  "scripts": {
+    "build": "browserify ./src/app.js -o ./dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hi.antqi@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^16.5.1",
+    "uniq": "^1.0.1"
+  }
+}
