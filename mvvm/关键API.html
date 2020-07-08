@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MVVM用到的关键API</title>
+  </head>
+  <body>
+    <h2 id="h2">h2</h2>
+    <!-- 我是注释 -->
+    <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+    </ul>
+    <script>
+      /**
+       * 1 将伪数组转换伪真数组
+       * Array.prototype.slice.call(arr)
+       * Array.form()
+       * **/
+      var eleLi = document.getElementsByTagName('li') // HTMLCollction
+      var eleLi2 = document.querySelectorAll('li') // NodeList 包含forEach
+      eleLi = Array.prototype.slice.call(eleLi)
+      eleLi2 = Array.from(eleLi2)
+      console.log(eleLi, eleLi2)
+
+      /**
+       * 2 nodeType 文档节点类型
+       * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Node/nodeType
+       * **/
+      var h2 = document.getElementById('h2')
+      console.log(h2.nodeType, h2.childNodes[0].nodeType)
+    </script>
+  </body>
+</html>
