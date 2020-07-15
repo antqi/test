@@ -25,18 +25,77 @@
       var eleLi2 = document.querySelectorAll('li') // NodeList 包含forEach
       eleLi = Array.prototype.slice.call(eleLi)
       eleLi2 = Array.from(eleLi2)
-      console.log(eleLi, eleLi2)
+      // console.log(eleLi, eleLi2)
 
       /**
        * 2 nodeType 文档节点类型
        * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Node/nodeType
        * **/
       var h2 = document.getElementById('h2')
-      console.log(h2.nodeType, h2.childNodes[0].nodeType)
+      // console.log(h2.nodeType, h2.childNodes[0].nodeType)
 
       /**
        * 3 对象的属性描述器
        * **/
+      var obj1 = {
+        name: 'Tim',
+        age: 10,
+      }
+
+      // obj1添加简意自我介绍属性
+      // obj1.desc = `${obj1}${age}岁` // 太low了
+      // Object.defineProperty(obj1, 'desc', {
+      //   get() {
+      //     return `${this.name}-${this.age}岁`
+      //   },
+      //   set(value) {
+      //     const arr = value.replace(/岁$/, '').split(',')
+      //     this.name = arr[0]
+      //     this.age = arr[1]
+      //   },
+      // })
+
+      // console.log(obj1.desc) // Tim,10岁
+      // obj1.desc = '大宝,3岁'
+      // console.log(obj1.name, obj1.age) //大宝 3
+
+      /**
+       * configurable
+       * **/
+      // Object.defineProperty(obj1, 'desc', {
+      //   configurable: false, // 设置不可配置
+      // })
+
+      // // 再次配置
+      // Object.defineProperty(obj1, 'desc', {
+      //   writable: false,
+      // })
+      // // 报错 Uncaught TypeError: Cannot redefine property: desc
+
+      /**
+       * writable
+       * **/
+      // Object.defineProperty(obj1, 'name', {
+      //   writable: false, // 设置不可写
+      // })
+      // obj1.name = '小宝'
+      // console.log(obj1.name) // Tim
+
+      /**
+       * enumerable
+       * **/
+      // Object.defineProperty(obj1, 'age', {
+      //   enumerable: false,
+      // })
+      // console.log(Object.keys(obj1)) // ['name']
+
+      /**
+       * value
+       * **/
+      Object.defineProperty(obj1, 'name2', {
+        value: 'John',
+      })
+      console.log(obj1.name2)
     </script>
   </body>
 </html>
