@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>{{message}}</h2>
+    </div>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script> -->
+    <script src="./js//observer.js"></script>
+    <script src="./js/compile.js"></script>
+    <script src="./js//watcher.js"></script>
+    <script src="js/mvvm.js"></script>
+    <script>
+      /**
+       * 数据代理：通过一个对象代理对另一个对象中属性的读/写
+       * **/
+      const vm = new MVVM({
+        el: '#app',
+        data: {
+          message: 'Hi ',
+        },
+      })
+
+      vm.message = 'Hi, World'
+
+      console.log(vm)
+    </script>
+  </body>
+</html>
