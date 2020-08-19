@@ -17,29 +17,79 @@
       // changeAge(person)
       // console.log(person)
 
-      function fun(n, o) {
-        console.log(o)
-        return {
-          fun: function (m) {
-            return fun(m, n)
-          },
-        }
+      // function fun(n, o) {
+      //   console.log(o)
+      //   return {
+      //     fun: function (m) {
+      //       return fun(m, n)
+      //     },
+      //   }
+      // }
+
+      // var a = fun(0) //undefined
+      // a.fun(1) // 0 (执行环境是window)
+      // a.fun(2) // 0 (执行环境是window)
+      // a.fun(3) // 0 (执行环境是window)
+
+      // var b = fun(0).fun(1).fun(2).fun(3)
+      // // undefined
+      // // 0 (执行环境是fun,表示在闭包中)
+      // // 1 (执行环境是fun,表示在闭包中)
+      // // 2 (执行环境是fun,表示在闭包中)
+
+      // var c = fun(0).fun(1) // undefined 0 (执行环境是fun,表示在闭包中)
+      // c.fun(2) // undefined 0 (执行环境是window)
+      // c.fun(3) // undefined 0 (执行环境是window)
+
+      //  原型链继承
+      function Super() {
+        this.type = 'Super'
       }
 
-      var a = fun(0) //undefined
-      a.fun(1) // 0 (执行环境是window)
-      a.fun(2) // 0 (执行环境是window)
-      a.fun(3) // 0 (执行环境是window)
+      Super.prototype.say = function () {
+        console.log('Super Say')
+      }
 
-      var b = fun(0).fun(1).fun(2).fun(3)
-      // undefined
-      // 0 (执行环境是fun,表示在闭包中)
-      // 1 (执行环境是fun,表示在闭包中)
-      // 2 (执行环境是fun,表示在闭包中)
+      function Sub() {
+        this.type = 'Sub'
+      }
 
-      var c = fun(0).fun(1) // undefined 0 (执行环境是fun,表示在闭包中)
-      c.fun(2) // undefined 0 (执行环境是window)
-      c.fun(3) // undefined 0 (执行环境是window)
+      //【重点代码】创建父类型的对象赋值给子类型的原型
+      // sub.__proto__=== Super.prototype
+      Sub.prototype = new Super()
+
+      // 将Sub的原型构造函数指向Sub
+      Sub.prototype.constructor = Sub
+
+      Sub.prototype.sayLoudly = function () {
+        console.log('Sub Say !!!')
+      }
+
+      var sub = new Sub()
+      console.log(sub.constructor) // Super 这是不对的，正常应该指向Sub
+
+      // 构造函数继承
+      // function Super() {
+      //   this.tpye = 'Super'
+      // }
+
+      // Super.prototype.say = function () {
+      //   console.log('Super Say')
+      // }
+
+      // function Sub() {
+      //   this.type = 'Sub'
+      //   Super.call(this)
+      //   // this.prototype = new Super()
+      //   console.log(this)
+      // }
+
+      // Sub.prototype.sayLoudly = function () {
+      //   console.log('Sub Say!!!')
+      // }
+
+      // var sub = new Sub()
+      // console.log(sub)
     </script>
   </body>
 </html>
