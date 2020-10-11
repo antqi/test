@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>防抖</title>
+    <style>
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <input class="keyword" type="text" placeholder="随意输入" />
+    <ul class="result-container"></ul>
+
+    <script>
+      var ulEl = document.querySelector('.result-container')
+      var loading = false
+      var isWait = false
+
+      function init() {
+        getKeyword()
+      }
+
+      function getKeyword() {
+        let textEl = document.querySelector('.keyword')
+
+        textEl.addEventListener('input', function (e) {
+          // 合并请求
+          if (loading) {
+            isWait = true
+            return
+          }
+
+          loading = true
+          toggleLoading()
+          reqHandler(textEl.value)
+        })
+      }
+
+      function reqHandler(text) {
+        showResult(text).then((res) => {
+          loading = false
+
+          // 有等待的请求
+          if (isWait) {
+            reqHandler()
+          }
+
+          isWait = false
+        })
+      }
+
+      async function showResult(text) {
+        var fragment = document.createDocumentFragment()
+        var count = await getData()
+
+        for (let i = 0; i < count; i++) {
+          var li = document.createElement('li')
+          li.innerText = `${text} _ ${Math.random()}`
+          fragment.appendChild(li)
+        }
+
+        ulEl.innerHTML = ''
+        ulEl.append(fragment)
+      }
+
+      function getData() {
+        // 模拟远程获取数据
+        console.log('sending....')
+
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(Math.random() * 1000)
+          }, 2000)
+        })
+      }
+
+      function toggleLoading() {
+        loading ? (ulEl.innerHTML = 'loading...') : (ulEl.innerHTML = '')
+      }
+
+      init()
+    </script>
+  </body>
+</html>

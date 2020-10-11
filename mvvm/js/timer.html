@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>定时器问题</title>
+  </head>
+  <body>
+    <button>定时器</button>
+    <script>
+      document.querySelector('button').addEventListener('click', function () {
+        console.time('----timer----')
+        var timer = setTimeout(() => {
+          clearTimeout(timer)
+          timer = null
+
+          console.timeEnd('----timer----')
+        }, 200)
+
+        for (let index = 0; index < 1000000000; index++) {}
+      })
+    </script>
+  </body>
+</html>
