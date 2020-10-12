@@ -9,73 +9,124 @@
         list-style: none;
         padding: 0;
       }
+      li {
+        padding: 0 5px;
+        border: 1px solid #ccc;
+        margin: 0 0 5px 0;
+      }
       .loading {
         display: none;
+      }
+
+      .main-container {
+        display: flex;
+      }
+      .left,
+      .right {
+        flex: 1;
       }
     </style>
   </head>
   <body>
-    <input class="keyword" type="text" placeholder="随意输入" />
-    <div class="loading">loading...</div>
-    <ul class="result-container"></ul>
+    <div>防抖：在事件触发n秒后回调，如果在限制事件内再次触发，则重新计算</div>
+
+    <div class="main-container">
+      <div class="left shake">
+        <h5>未防抖</h5>
+        <input class="keyword" type="text" placeholder="随意输入" />
+        <div class="loading">loading...</div>
+        <ul class="result-container"></ul>
+      </div>
+      <div class="right no-shake">
+        <h5>防抖</h5>
+        <input class="keyword" type="text" placeholder="随意输入" />
+        <div class="loading">loading...</div>
+        <ul class="result-container"></ul>
+      </div>
+    </div>
 
     <script>
-      var ulEl = document.querySelector('.result-container')
-      var loadingEl = document.querySelector('.loading')
-      var loading = false
-      var isWait = false
+      var shakeEl = document.querySelector('.shake')
 
-      function init() {
-        getKeyword()
+      var shake = {
+        isShale: true,
+        ulEl: shakeEl.querySelector('.result-container'),
+        loadingEl: shakeEl.querySelector('.loading'),
+        textEl: shakeEl.querySelector('.keyword'),
+        loading: false,
+        isWait: false,
       }
 
-      function getKeyword() {
-        let textEl = document.querySelector('.keyword')
+      var noShakeEl = document.querySelector('.no-shake')
 
-        textEl.addEventListener('input', function (e) {
+      var noShake = {
+        ulEl: noShakeEl.querySelector('.result-container'),
+        loadingEl: noShakeEl.querySelector('.loading'),
+        textEl: noShakeEl.querySelector('.keyword'),
+        loading: false,
+        isWait: false,
+      }
+
+      function init(obj) {
+        watchInput(obj)
+      }
+
+      // 获取关键字
+      function watchInput(obj) {
+        obj.textEl.addEventListener('input', function (e) {
+          if (!obj.textEl.value) {
+            return
+          }
           // 合并请求
-          if (loading) {
-            isWait = true
+          if (!obj.isShale && obj.loading) {
+            obj.isWait = true
             return
           }
 
-          loading = true
-          toggleLoading()
-          reqHandler(textEl.value)
+          obj.loading = true
+          toggleLoading(obj)
+          reqHandler(obj)
         })
       }
 
-      function reqHandler(text) {
-        showResult(text).then((res) => {
-          loading = false
-          toggleLoading()
-
-          // 有等待的请求
-          if (isWait) {
-            reqHandler()
+      // 合并请求
+      function reqHandler(obj) {
+        var text = getNewWord(obj)
+        showResult(text, obj).then((res) => {
+          // 有等待的请求，再次触发数据更新
+          if (obj.isWait) {
+            reqHandler(obj)
+          } else {
+            obj.loading = false
+            toggleLoading(obj)
           }
 
-          isWait = false
+          obj.isWait = false
         })
       }
 
-      async function showResult(text) {
+      // 显示数据
+      async function showResult(text, obj) {
         var fragment = document.createDocumentFragment()
         var count = await getData()
 
         for (let i = 0; i < count; i++) {
           var li = document.createElement('li')
-          li.innerText = `${text} _ ${Math.random()}`
+          li.innerText = `${i + 1}_ ${text} _ ${Math.random()}`
           fragment.appendChild(li)
         }
 
-        ulEl.innerHTML = ''
-        ulEl.append(fragment)
+        obj.ulEl.innerHTML = ''
+        obj.ulEl.append(fragment)
       }
 
+      // 模拟获取远程数据
       function getData() {
-        // 模拟远程获取数据
-        console.log(`${new Date().toLocaleTimeString()} ajax sending....`)
+        console.log(
+          `${new Date().toLocaleTimeString()} ajax sending ${
+            document.querySelector('.keyword').value
+          }`
+        )
 
         return new Promise((resolve, reject) => {
           setTimeout(() => {
@@ -84,13 +135,20 @@
         })
       }
 
-      function toggleLoading() {
-        loading
-          ? (loadingEl.style.display = 'inline-block')
-          : (loadingEl.style.display = 'none')
+      // 切换loading
+      function toggleLoading(obj) {
+        obj.loading
+          ? (obj.loadingEl.style.display = 'inline-block')
+          : (obj.loadingEl.style.display = 'none')
       }
 
-      init()
+      // 获取最新关键字
+      function getNewWord(obj) {
+        return obj.textEl.value
+      }
+
+      init(shake)
+      init(noShake)
     </script>
   </body>
 </html>
